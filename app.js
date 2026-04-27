@@ -40,6 +40,9 @@ const displayNameInput = document.getElementById('display-name-input');
 const btnLogout = document.getElementById('btn-logout');
 const profileClose = document.getElementById('profile-close');
 const profilePhone = document.getElementById('profile-phone');
+const bannerInput = document.getElementById('banner-input');
+const btnChangeBanner = document.getElementById('btn-change-banner');
+const bannerPreview = document.getElementById('banner-preview');
 
 // Initialization
 function init() {
@@ -80,6 +83,11 @@ function initEventListeners() {
     // Profile photo
     btnChangeAvatar.addEventListener('click', () => avatarInput.click());
     avatarInput.addEventListener('change', handleProfilePhotoUpload);
+    
+    // Banner
+    btnChangeBanner.addEventListener('click', () => bannerInput.click());
+    bannerInput.addEventListener('change', handleBannerUpload);
+
     profileClose.addEventListener('click', () => profileModal.classList.remove('active'));
     btnLogout.addEventListener('click', logout);
     profileSave.addEventListener('click', saveProfile);
@@ -102,9 +110,20 @@ function initEventListeners() {
 
     // Settings Items
     document.querySelectorAll('.settings-item').forEach(item => {
-        item.addEventListener('click', () => {
+        item.addEventListener('click', (e) => {
+            if (e.target.tagName === 'INPUT') return; // Don't trigger alert for switches
             const label = item.querySelector('span').textContent;
             alert(`${label} settings are currently locked for maximum security.`);
+        });
+    });
+
+    // Settings Toggles
+    document.querySelectorAll('.switch input').forEach(toggle => {
+        toggle.addEventListener('change', (e) => {
+            const settingName = e.target.closest('.settings-item').id || 'unknown';
+            if (!currentUser.settings) currentUser.settings = {};
+            currentUser.settings[settingName] = e.target.checked;
+            saveData();
         });
     });
     
@@ -371,7 +390,20 @@ function handleProfilePhotoUpload(e) {
     const reader = new FileReader();
     reader.onload = function(event) {
         currentUser.avatar = event.target.result;
-        localStorage.setItem('cipher-user', JSON.stringify(currentUser));
+        saveData();
+        updateProfileUI();
+    };
+    reader.readAsDataURL(file);
+}
+
+function handleBannerUpload(e) {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = function(event) {
+        currentUser.banner = event.target.result;
+        saveData();
         updateProfileUI();
     };
     reader.readAsDataURL(file);
@@ -381,9 +413,21 @@ function updateProfileUI() {
     if (!currentUser) return;
     myAvatar.src = currentUser.avatar || `https://api.dicebear.com/7.x/avataaars/svg?seed=${currentUser.phone}`;
     profilePreview.src = myAvatar.src;
+    if (currentUser.banner) bannerPreview.src = currentUser.banner;
     displayNameInput.value = currentUser.name || 'User';
     usernameInput.value = currentUser.username || '@user';
     profilePhone.textContent = currentUser.phone || 'Unknown';
+    
+    // Update Toggles
+    if (currentUser.settings) {
+        Object.keys(currentUser.settings).forEach(id => {
+            const el = document.getElementById(id);
+            if (el) {
+                const input = el.querySelector('input');
+                if (input) input.checked = currentUser.settings[id];
+            }
+        });
+    }
 }
 
 function logout() {

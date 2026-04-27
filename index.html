@@ -156,40 +156,59 @@
             </header>
             
             <div class="settings-profile-card">
-                <div class="profile-avatar-wrapper">
-                    <img id="profile-preview" src="https://api.dicebear.com/7.x/avataaars/svg?seed=Felix" class="large-avatar">
-                    <button class="btn-edit-avatar" id="btn-change-avatar">
-                        <i data-lucide="camera"></i>
+                <div class="profile-banner-wrapper">
+                    <img id="banner-preview" src="https://images.unsplash.com/photo-1614850523296-d8c1af93d400?q=80&w=1000" class="profile-banner">
+                    <button class="btn-edit-banner" id="btn-change-banner">
+                        <i data-lucide="image"></i>
                     </button>
-                    <input type="file" id="avatar-input" accept="image/*" style="display: none;">
+                    <input type="file" id="banner-input" accept="image/*" style="display: none;">
                 </div>
-                <div class="profile-info">
-                    <input type="text" id="display-name-input" placeholder="Display Name" value="Felix">
-                    <span id="profile-phone">+33 6 12 34 56 78</span>
-                    <input type="text" id="username-input" placeholder="@username" value="@felix">
+                
+                <div class="profile-main-info">
+                    <div class="profile-avatar-wrapper">
+                        <img id="profile-preview" src="https://api.dicebear.com/7.x/avataaars/svg?seed=Felix" class="large-avatar">
+                        <button class="btn-edit-avatar" id="btn-change-avatar">
+                            <i data-lucide="camera"></i>
+                        </button>
+                        <input type="file" id="avatar-input" accept="image/*" style="display: none;">
+                    </div>
+                    <div class="profile-info">
+                        <input type="text" id="display-name-input" placeholder="Display Name" value="Felix">
+                        <span id="profile-phone">+33 6 12 34 56 78</span>
+                        <input type="text" id="username-input" placeholder="@username" value="@felix">
+                    </div>
                 </div>
             </div>
 
             <div class="settings-list">
-                <div class="settings-item">
+                <div class="settings-section-title">Account</div>
+                <div class="settings-item" id="set-notifications">
                     <i data-lucide="bell" class="icon-orange"></i>
                     <span>Notifications and Sounds</span>
-                    <i data-lucide="chevron-right" class="arrow"></i>
+                    <label class="switch">
+                        <input type="checkbox" checked>
+                        <span class="slider"></span>
+                    </label>
                 </div>
-                <div class="settings-item">
+                <div class="settings-item" id="set-privacy">
                     <i data-lucide="lock" class="icon-blue"></i>
                     <span>Privacy and Security</span>
                     <i data-lucide="chevron-right" class="arrow"></i>
                 </div>
+                
+                <div class="settings-section-title">Security Features</div>
                 <div class="settings-item">
-                    <i data-lucide="database" class="icon-green"></i>
-                    <span>Data and Storage</span>
-                    <i data-lucide="chevron-right" class="arrow"></i>
+                    <i data-lucide="shield-check" class="icon-green"></i>
+                    <span>Two-Step Verification</span>
+                    <span class="value">On</span>
                 </div>
                 <div class="settings-item">
-                    <i data-lucide="languages" class="icon-purple"></i>
-                    <span>Language</span>
-                    <span class="value">English</span>
+                    <i data-lucide="eye-off" class="icon-purple"></i>
+                    <span>Incognito Mode</span>
+                    <label class="switch">
+                        <input type="checkbox">
+                        <span class="slider"></span>
+                    </label>
                 </div>
             </div>
 
