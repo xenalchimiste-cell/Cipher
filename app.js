@@ -324,16 +324,7 @@ function sendMessage() {
     activeChat.time = 'Now';
     
     saveData();
-    
-    // Append message immediately for effect
-    const msgEl = document.createElement('div');
-    msgEl.className = 'message sent';
-    msgEl.innerHTML = `<span class="cipher-text"></span><div class="msg-meta"><span class="msg-time">${newMsg.time}</span><i data-lucide="check-check" class="status-icon read"></i></div>`;
-    messageArea.appendChild(msgEl);
-    lucide.createIcons();
-    
-    cipherEffect(msgEl.querySelector('.cipher-text'), text);
-    
+    renderMessages();
     renderChatList();
     
     messageInput.value = '';
@@ -346,6 +337,7 @@ function sendMessage() {
 
 function simulateReply() {
     if (!activeChat) return;
+    
     const replies = [
         "Transmission received. Encrypting response...",
         "Acknowledged. Node is stable.",
@@ -365,15 +357,8 @@ function simulateReply() {
     activeChat.time = 'Now';
     
     saveData();
-    
-    const msgEl = document.createElement('div');
-    msgEl.className = 'message received';
-    msgEl.innerHTML = `<span class="cipher-text"></span><div class="msg-meta"><span class="msg-time">${reply.time}</span></div>`;
-    messageArea.appendChild(msgEl);
-    
-    cipherEffect(msgEl.querySelector('.cipher-text'), reply.text);
+    renderMessages();
     renderChatList();
-    scrollToBottom();
 }
 
 function handlePhotoUpload(e) {
