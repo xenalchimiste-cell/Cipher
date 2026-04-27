@@ -1,33 +1,38 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>Cipher | Secure Node</title>
-    
+
     <!-- PWA Primary Meta Tags -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="Cipher">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="theme-color" content="#050505">
-    
+
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-    
+    <link
+        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+
     <!-- Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
-    
+
     <link rel="stylesheet" href="style.css">
     <link rel="manifest" href="manifest.json">
 </head>
+
 <body class="theme-deep-space">
     <div class="app-container" id="app-container">
         <!-- Background Nebula -->
         <div class="nebula-bg"></div>
-        
+
         <!-- Onboarding View -->
         <div id="onboarding-view" class="view active">
             <div class="onboarding-card glass-card">
@@ -90,7 +95,7 @@
                     <h2 class="sidebar-title">Cipher</h2>
                     <button class="icon-btn" id="new-chat-btn"><i data-lucide="edit-3"></i></button>
                 </header>
-                
+
                 <div class="search-bar">
                     <i data-lucide="search"></i>
                     <input type="text" id="contact-search" placeholder="Search @username or phone...">
@@ -154,61 +159,43 @@
                 <h3>Settings</h3>
                 <button class="text-btn" id="profile-save">Done</button>
             </header>
-            
+
             <div class="settings-profile-card">
-                <div class="profile-banner-wrapper">
-                    <img id="banner-preview" src="https://images.unsplash.com/photo-1614850523296-d8c1af93d400?q=80&w=1000" class="profile-banner">
-                    <button class="btn-edit-banner" id="btn-change-banner">
-                        <i data-lucide="image"></i>
+                <div class="profile-avatar-wrapper">
+                    <img id="profile-preview" src="https://api.dicebear.com/7.x/avataaars/svg?seed=Felix"
+                        class="large-avatar">
+                    <button class="btn-edit-avatar" id="btn-change-avatar">
+                        <i data-lucide="camera"></i>
                     </button>
-                    <input type="file" id="banner-input" accept="image/*" style="display: none;">
+                    <input type="file" id="avatar-input" accept="image/*" style="display: none;">
                 </div>
-                
-                <div class="profile-main-info">
-                    <div class="profile-avatar-wrapper">
-                        <img id="profile-preview" src="https://api.dicebear.com/7.x/avataaars/svg?seed=Felix" class="large-avatar">
-                        <button class="btn-edit-avatar" id="btn-change-avatar">
-                            <i data-lucide="camera"></i>
-                        </button>
-                        <input type="file" id="avatar-input" accept="image/*" style="display: none;">
-                    </div>
-                    <div class="profile-info">
-                        <input type="text" id="display-name-input" placeholder="Display Name" value="Felix">
-                        <span id="profile-phone">+33 6 12 34 56 78</span>
-                        <input type="text" id="username-input" placeholder="@username" value="@felix">
-                    </div>
+                <div class="profile-info">
+                    <input type="text" id="display-name-input" placeholder="Display Name" value="Felix">
+                    <span id="profile-phone">+33 6 12 34 56 78</span>
+                    <input type="text" id="username-input" placeholder="@username" value="@felix">
                 </div>
             </div>
 
             <div class="settings-list">
-                <div class="settings-section-title">Account</div>
-                <div class="settings-item" id="set-notifications">
+                <div class="settings-item">
                     <i data-lucide="bell" class="icon-orange"></i>
                     <span>Notifications and Sounds</span>
-                    <label class="switch">
-                        <input type="checkbox" checked>
-                        <span class="slider"></span>
-                    </label>
+                    <i data-lucide="chevron-right" class="arrow"></i>
                 </div>
-                <div class="settings-item" id="set-privacy">
+                <div class="settings-item">
                     <i data-lucide="lock" class="icon-blue"></i>
                     <span>Privacy and Security</span>
                     <i data-lucide="chevron-right" class="arrow"></i>
                 </div>
-                
-                <div class="settings-section-title">Security Features</div>
                 <div class="settings-item">
-                    <i data-lucide="shield-check" class="icon-green"></i>
-                    <span>Two-Step Verification</span>
-                    <span class="value">On</span>
+                    <i data-lucide="database" class="icon-green"></i>
+                    <span>Data and Storage</span>
+                    <i data-lucide="chevron-right" class="arrow"></i>
                 </div>
                 <div class="settings-item">
-                    <i data-lucide="eye-off" class="icon-purple"></i>
-                    <span>Incognito Mode</span>
-                    <label class="switch">
-                        <input type="checkbox">
-                        <span class="slider"></span>
-                    </label>
+                    <i data-lucide="languages" class="icon-purple"></i>
+                    <span>Language</span>
+                    <span class="value">English</span>
                 </div>
             </div>
 
@@ -228,4 +215,5 @@
         lucide.createIcons();
     </script>
 </body>
+
 </html>

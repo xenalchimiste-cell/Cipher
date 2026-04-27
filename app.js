@@ -328,7 +328,7 @@ function sendMessage() {
     // Append message immediately for effect
     const msgEl = document.createElement('div');
     msgEl.className = 'message sent';
-    msgEl.innerHTML = `<span class="cipher-text"></span><div class="msg-meta"><span class="msg-time">${newMsg.time}</span><i data-lucide="check" class="status-icon"></i></div>`;
+    msgEl.innerHTML = `<span class="cipher-text"></span><div class="msg-meta"><span class="msg-time">${newMsg.time}</span><i data-lucide="check-check" class="status-icon read"></i></div>`;
     messageArea.appendChild(msgEl);
     lucide.createIcons();
     
@@ -349,10 +349,14 @@ function simulateReply() {
     const replies = [
         "Transmission received. Encrypting response...",
         "Acknowledged. Node is stable.",
+        "Secure link established. Proceed.",
+        "Payload verified. Stand by."
+    ];
+    const replyText = replies[Math.floor(Math.random() * replies.length)];
     
     const reply = {
         sender: 'other',
-        text: "Message Decrypted. Access Granted.",
+        text: replyText,
         time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
     };
     
