@@ -597,8 +597,9 @@ h1, h2, h3, .sidebar-title {
 @media (max-width: 768px) {
     .sidebar {
         width: 100%;
-        height: calc(100% - 70px); /* Space for fixed nav */
+        height: 100%;
         border-right: none;
+        padding-bottom: 70px;
     }
     
     .chat-view {
