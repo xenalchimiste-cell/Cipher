@@ -23,7 +23,12 @@ body {
     color: var(--text-primary);
     overflow: hidden;
     height: 100vh;
-    height: -webkit-fill-available;
+    width: 100vw;
+    margin: 0;
+}
+
+html {
+    height: 100%;
 }
 
 h1, h2, h3, .sidebar-title {
@@ -35,6 +40,7 @@ h1, h2, h3, .sidebar-title {
     height: 100%;
     display: flex;
     position: relative;
+    overflow: hidden;
 }
 
 .nebula-bg {
@@ -233,6 +239,7 @@ h1, h2, h3, .sidebar-title {
 /* Sidebar */
 .sidebar {
     width: var(--sidebar-width);
+    height: 100%;
     border-right: 1px solid var(--glass-border);
     display: flex;
     flex-direction: column;
@@ -559,8 +566,11 @@ h1, h2, h3, .sidebar-title {
 .mobile-nav {
     display: none;
     padding: 12px 24px;
+    padding-bottom: calc(12px + env(safe-area-inset-bottom));
     border-top: 1px solid var(--glass-border);
     justify-content: space-around;
+    background: rgba(10, 10, 10, 0.8);
+    margin-top: auto;
 }
 
 .nav-btn {
