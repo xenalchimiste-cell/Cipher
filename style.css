@@ -178,6 +178,57 @@ h1, h2, h3, .sidebar-title {
     margin-top: 20px;
 }
 
+/* OTP Specific */
+.otp-input-group {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 30px;
+}
+
+.otp-digit {
+    width: 60px;
+    height: 70px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    text-align: center;
+    font-size: 28px;
+    font-weight: 700;
+    color: white;
+    outline: none;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.otp-digit:focus {
+    border-color: var(--accent-blue);
+    box-shadow: 0 0 15px var(--accent-glow);
+}
+
+/* Chrome, Safari, Edge, Opera - hide spin buttons */
+.otp-digit::-webkit-outer-spin-button,
+.otp-digit::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.otp-footer {
+    margin-top: 24px;
+    font-size: 14px;
+    color: var(--text-secondary);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.otp-footer .text-btn {
+    color: var(--accent-blue);
+    font-weight: 600;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
 /* Sidebar */
 .sidebar {
     width: var(--sidebar-width);

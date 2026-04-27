@@ -52,6 +52,32 @@
             </div>
         </div>
 
+        <!-- OTP View -->
+        <div id="otp-view" class="view">
+            <div class="onboarding-card glass-card">
+                <div class="logo-container">
+                    <div class="logo-shield">
+                        <i data-lucide="shield-check"></i>
+                    </div>
+                    <h1>Verify Phone</h1>
+                    <p id="otp-phone-display">We sent a code to +33 6 12 34 56 78</p>
+                </div>
+                <div class="otp-input-group">
+                    <input type="number" class="otp-digit" maxlength="1" data-index="0">
+                    <input type="number" class="otp-digit" maxlength="1" data-index="1">
+                    <input type="number" class="otp-digit" maxlength="1" data-index="2">
+                    <input type="number" class="otp-digit" maxlength="1" data-index="3">
+                </div>
+                <button class="btn-primary" id="btn-otp-verify">
+                    Verify Code <i data-lucide="check"></i>
+                </button>
+                <div class="otp-footer">
+                    <span>Didn't receive it?</span>
+                    <button class="text-btn" id="btn-otp-resend">Resend Code</button>
+                </div>
+            </div>
+        </div>
+
         <!-- Main Messenger View -->
         <div id="messenger-view" class="view">
             <!-- Sidebar (Desktop) / List View (Mobile) -->

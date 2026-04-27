@@ -10,6 +10,7 @@ let messages = JSON.parse(localStorage.getItem('cipher-messages')) || {};
 
 // DOM Elements
 const onboardingView = document.getElementById('onboarding-view');
+const otpView = document.getElementById('otp-view');
 const messengerView = document.getElementById('messenger-view');
 const chatView = document.getElementById('chat-view');
 const chatList = document.getElementById('chat-list');
@@ -18,6 +19,10 @@ const messageInput = document.getElementById('message-input');
 const btnSend = document.getElementById('btn-send');
 const phoneInput = document.getElementById('phone-input');
 const btnOnboardingNext = document.getElementById('btn-onboarding-next');
+const btnOtpVerify = document.getElementById('btn-otp-verify');
+const btnOtpResend = document.getElementById('btn-otp-resend');
+const otpDigits = document.querySelectorAll('.otp-digit');
+const otpPhoneDisplay = document.getElementById('otp-phone-display');
 const backToList = document.getElementById('back-to-list');
 const contactSearch = document.getElementById('contact-search');
 const myProfileBtn = document.getElementById('my-profile-btn');
@@ -47,7 +52,20 @@ function init() {
 
 function initEventListeners() {
     btnOnboardingNext.addEventListener('click', handleOnboarding);
+    btnOtpVerify.addEventListener('click', verifyOTP);
+    btnOtpResend.addEventListener('click', sendOTP);
     btnSend.addEventListener('click', sendMessage);
+    
+    // OTP Digits Auto-focus
+    otpDigits.forEach((digit, idx) => {
+        digit.addEventListener('keyup', (e) => {
+            if (e.key >= 0 && e.key <= 9) {
+                if (idx < otpDigits.length - 1) otpDigits[idx + 1].focus();
+            } else if (e.key === 'Backspace') {
+                if (idx > 0) otpDigits[idx - 1].focus();
+            }
+        });
+    });
     backToList.addEventListener('click', hideChat);
     contactSearch.addEventListener('input', filterContacts);
     myProfileBtn.addEventListener('click', () => profileModal.classList.add('active'));
@@ -117,8 +135,35 @@ function handleOnboarding() {
     const phone = phoneInput.value.trim();
     if (phone.length >= 8) {
         currentUser = { phone, username: '@user' + Math.floor(Math.random() * 1000) };
+        sendOTP();
+    }
+}
+
+let generatedOTP = null;
+
+function sendOTP() {
+    generatedOTP = Math.floor(1000 + Math.random() * 9000).toString();
+    console.log("CIPHER SECURITY NODE: Sent OTP code:", generatedOTP);
+    alert(`CIPHER SECURITY NODE:\nVerification code sent to ${currentUser.phone}: ${generatedOTP}\n(Simulation Mode)`);
+    
+    otpPhoneDisplay.textContent = `We sent a code to +33 ${currentUser.phone}`;
+    onboardingView.classList.remove('active');
+    otpView.classList.add('active');
+    setTimeout(() => otpDigits[0].focus(), 500);
+}
+
+function verifyOTP() {
+    let enteredOTP = "";
+    otpDigits.forEach(d => enteredOTP += d.value);
+    
+    if (enteredOTP === generatedOTP) {
         localStorage.setItem('cipher-user', JSON.stringify(currentUser));
+        otpView.classList.remove('active');
         showMessenger();
+    } else {
+        alert("Invalid verification code. Please try again.");
+        otpDigits.forEach(d => d.value = "");
+        otpDigits[0].focus();
     }
 }
 
