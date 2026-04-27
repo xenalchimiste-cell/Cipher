@@ -113,13 +113,30 @@ function initEventListeners() {
         });
     });
 
-    // Settings Items
-    document.querySelectorAll('.settings-item').forEach(item => {
-        item.addEventListener('click', (e) => {
-            if (e.target.tagName === 'INPUT') return; // Don't trigger alert for switches
-            const label = item.querySelector('span').textContent;
-            alert(`${label} settings are currently locked for maximum security.`);
+    // Visual Viewport (Keyboard detection)
+    if (window.visualViewport) {
+        window.visualViewport.addEventListener('resize', () => {
+            const viewportHeight = window.visualViewport.height;
+            const windowHeight = window.innerHeight;
+            const keyboardHeight = windowHeight - viewportHeight;
+            
+            if (keyboardHeight > 50) {
+                // Keyboard is likely open
+                messengerView.style.height = `${viewportHeight}px`;
+                document.querySelector('.mobile-nav').style.display = 'none';
+                scrollToBottom();
+            } else {
+                // Keyboard is closed
+                messengerView.style.height = '100%';
+                if (window.innerWidth <= 768) {
+                    document.querySelector('.mobile-nav').style.display = 'flex';
+                }
+            }
         });
+    }
+
+    messageInput.addEventListener('focus', () => {
+        setTimeout(scrollToBottom, 300);
     });
 
     // Settings Toggles
