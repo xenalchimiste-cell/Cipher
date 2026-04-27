@@ -70,6 +70,7 @@ function initEventListeners() {
     backToList.addEventListener('click', hideChat);
     contactSearch.addEventListener('input', filterContacts);
     myProfileBtn.addEventListener('click', () => profileModal.classList.add('active'));
+    document.getElementById('my-profile-btn-mobile').addEventListener('click', () => profileModal.classList.add('active'));
     profileSave.addEventListener('click', saveProfile);
     
     // Photo attachment

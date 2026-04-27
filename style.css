@@ -573,12 +573,16 @@ h1, h2, h3, .sidebar-title {
 /* Mobile Navigation (only mobile) */
 .mobile-nav {
     display: none;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
     padding: 12px 24px;
-    padding-bottom: calc(12px + env(safe-area-inset-bottom));
+    padding-bottom: env(safe-area-inset-bottom, 12px);
     border-top: 1px solid var(--glass-border);
     justify-content: space-around;
-    background: rgba(10, 10, 10, 0.8);
-    margin-top: auto;
+    background: #0A0A0A;
+    z-index: 1000;
 }
 
 .nav-btn {
@@ -595,6 +599,7 @@ h1, h2, h3, .sidebar-title {
 @media (max-width: 768px) {
     .sidebar {
         width: 100%;
+        height: calc(100% - 70px); /* Space for fixed nav */
         border-right: none;
     }
     
