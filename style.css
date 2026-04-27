@@ -183,7 +183,8 @@ h1, h2, h3, .sidebar-title {
     display: flex;
     justify-content: center;
     gap: 12px;
-    margin-bottom: 30px;
+    margin: 20px auto 30px;
+    width: 100%;
 }
 
 .otp-digit {
@@ -580,19 +581,24 @@ h1, h2, h3, .sidebar-title {
     }
     
     .chat-view {
-        position: absolute;
+        position: fixed;
         top: 0;
         left: 0;
         width: 100%;
         height: 100%;
-        z-index: 10;
+        z-index: 100;
         transform: translateX(100%);
         transition: transform 0.4s cubic-bezier(0.1, 0.7, 0.1, 1), opacity 0.3s ease;
+        background: var(--bg-dark);
     }
     
     .chat-view.active {
         transform: translateX(0);
         opacity: 1;
+    }
+    
+    .sidebar.hidden-mobile {
+        display: none;
     }
     
     .back-btn {
@@ -775,9 +781,14 @@ h1, h2, h3, .sidebar-title {
 
 /* Responsive Tweaks */
 @media (max-width: 768px) {
+    .modal {
+        padding: 0;
+    }
     .settings-modal {
         width: 100%;
         height: 100%;
+        max-width: 100%;
+        max-height: 100%;
         border-radius: 0;
     }
 }

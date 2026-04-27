@@ -12,6 +12,7 @@ let messages = JSON.parse(localStorage.getItem('cipher-messages')) || {};
 const onboardingView = document.getElementById('onboarding-view');
 const otpView = document.getElementById('otp-view');
 const messengerView = document.getElementById('messenger-view');
+const sidebar = document.getElementById('sidebar');
 const chatView = document.getElementById('chat-view');
 const chatList = document.getElementById('chat-list');
 const messageArea = document.getElementById('message-area');
@@ -169,6 +170,7 @@ function verifyOTP() {
 
 function hideChat() {
     chatView.classList.remove('active');
+    sidebar.classList.remove('hidden-mobile');
 }
 
 // --- Chat List & Contacts ---
@@ -216,6 +218,7 @@ function selectChat(contact) {
     
     // Transition for mobile
     chatView.classList.add('active');
+    sidebar.classList.add('hidden-mobile');
     
     renderMessages();
 }
