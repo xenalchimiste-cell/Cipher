@@ -609,6 +609,10 @@ h1, h2, h3, .sidebar-title {
     z-index: 1000;
 }
 
+body.nav-hidden .mobile-nav {
+    display: none !important;
+}
+
 .nav-btn {
     background: none;
     border: none;
