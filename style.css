@@ -574,8 +574,8 @@ h1, h2, h3, .sidebar-title {
 }
 
 .send-btn {
-    width: 54px;
-    height: 54px;
+    width: 60px;
+    height: 60px;
     background: var(--accent-blue);
     border: none;
     border-radius: 50%;
@@ -589,13 +589,9 @@ h1, h2, h3, .sidebar-title {
     transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
-.send-btn:active {
-    transform: scale(0.9);
-}
-
 .send-btn i {
-    width: 26px;
-    height: 26px;
+    width: 28px;
+    height: 28px;
 }
 
 /* Mobile Navigation (only mobile) */
@@ -642,7 +638,7 @@ h1, h2, h3, .sidebar-title {
         transform: translateX(100%);
         transition: transform 0.4s cubic-bezier(0.1, 0.7, 0.1, 1), opacity 0.3s ease;
         background: var(--bg-dark);
-        padding-bottom: calc(75px + env(safe-area-inset-bottom, 0px)); /* Space for fixed nav */
+        padding-bottom: env(safe-area-inset-bottom, 0px); /* Just safe area */
     }
     
     .chat-view.active {

@@ -213,6 +213,8 @@ function verifyOTP() {
 function hideChat() {
     chatView.classList.remove('active');
     sidebar.classList.remove('hidden-mobile');
+    document.querySelector('.mobile-nav').style.display = 'flex';
+    messengerView.style.height = '100%';
 }
 
 // --- Chat List & Contacts ---
@@ -261,6 +263,7 @@ function selectChat(contact) {
     // Transition for mobile
     chatView.classList.add('active');
     sidebar.classList.add('hidden-mobile');
+    document.querySelector('.mobile-nav').style.display = 'none';
     
     renderMessages();
 }
