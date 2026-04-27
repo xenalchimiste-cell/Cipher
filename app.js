@@ -60,11 +60,16 @@ function initEventListeners() {
     btnOtpResend.addEventListener('click', sendOTP);
     btnSend.addEventListener('click', sendMessage);
     
-    // OTP Digits Auto-focus
+    // OTP Digits Auto-focus & Auto-submit
     otpDigits.forEach((digit, idx) => {
         digit.addEventListener('keyup', (e) => {
             if (e.key >= 0 && e.key <= 9) {
-                if (idx < otpDigits.length - 1) otpDigits[idx + 1].focus();
+                if (idx < otpDigits.length - 1) {
+                    otpDigits[idx + 1].focus();
+                } else {
+                    // Auto-verify when last digit entered
+                    verifyOTP();
+                }
             } else if (e.key === 'Backspace') {
                 if (idx > 0) otpDigits[idx - 1].focus();
             }
@@ -271,12 +276,33 @@ function renderMessages() {
 
         msgEl.innerHTML = `
             ${content}
-            <span class="msg-time">${msg.time}</span>
+            <div class="msg-meta">
+                <span class="msg-time">${msg.time}</span>
+                ${msg.sender === 'me' ? '<i data-lucide="check-check" class="status-icon read"></i>' : ''}
+            </div>
         `;
         messageArea.appendChild(msgEl);
     });
     
+    lucide.createIcons();
     scrollToBottom();
+}
+
+// Cipher Encryption Visual Effect
+function cipherEffect(element, finalValue) {
+    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@#$%^&*()';
+    let iterations = 0;
+    const interval = setInterval(() => {
+        element.innerText = finalValue.split("")
+            .map((char, index) => {
+                if (index < iterations) return finalValue[index];
+                return chars[Math.floor(Math.random() * chars.length)];
+            })
+            .join("");
+
+        if (iterations >= finalValue.length) clearInterval(interval);
+        iterations += 1 / 3;
+    }, 30);
 }
 
 function sendMessage() {
@@ -298,13 +324,23 @@ function sendMessage() {
     activeChat.time = 'Now';
     
     saveData();
-    renderMessages();
+    
+    // Append message immediately for effect
+    const msgEl = document.createElement('div');
+    msgEl.className = 'message sent';
+    msgEl.innerHTML = `<span class="cipher-text"></span><div class="msg-meta"><span class="msg-time">${newMsg.time}</span><i data-lucide="check" class="status-icon"></i></div>`;
+    messageArea.appendChild(msgEl);
+    lucide.createIcons();
+    
+    cipherEffect(msgEl.querySelector('.cipher-text'), text);
+    
     renderChatList();
     
     messageInput.value = '';
     messageInput.style.height = 'auto';
+    scrollToBottom();
 
-    // Simulate Echo/Encrypted reply after 1s
+    // Simulate Echo/Encrypted reply
     setTimeout(simulateReply, 1500);
 }
 
@@ -313,26 +349,27 @@ function simulateReply() {
     const replies = [
         "Transmission received. Encrypting response...",
         "Acknowledged. Node is stable.",
-        "Secure link established. Proceed.",
-        "Payload verified. Stand by."
-    ];
-    const replyText = replies[Math.floor(Math.random() * replies.length)];
     
-    const replyMsg = {
-        id: Date.now(),
-        text: replyText,
+    const reply = {
         sender: 'other',
-        type: 'text',
+        text: "Message Decrypted. Access Granted.",
         time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
     };
-
-    messages[activeChat.id].push(replyMsg);
-    activeChat.lastMsg = replyText;
+    
+    messages[activeChat.id].push(reply);
+    activeChat.lastMsg = reply.text;
     activeChat.time = 'Now';
     
     saveData();
-    renderMessages();
+    
+    const msgEl = document.createElement('div');
+    msgEl.className = 'message received';
+    msgEl.innerHTML = `<span class="cipher-text"></span><div class="msg-meta"><span class="msg-time">${reply.time}</span></div>`;
+    messageArea.appendChild(msgEl);
+    
+    cipherEffect(msgEl.querySelector('.cipher-text'), reply.text);
     renderChatList();
+    scrollToBottom();
 }
 
 function handlePhotoUpload(e) {
