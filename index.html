@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Cipher | Secure Node</title>
+    
+    <!-- PWA Primary Meta Tags -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Cipher">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="theme-color" content="#050505">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
+</head>
+<body class="theme-deep-space">
+    <div class="app-container" id="app-container">
+        <!-- Background Nebula -->
+        <div class="nebula-bg"></div>
+        
+        <!-- Onboarding View -->
+        <div id="onboarding-view" class="view active">
+            <div class="onboarding-card glass-card">
+                <div class="logo-container">
+                    <div class="logo-shield">
+                        <i data-lucide="shield-check"></i>
+                    </div>
+                    <h1>Cipher</h1>
+                    <p>Secure Communication Node</p>
+                </div>
+                <div class="input-group">
+                    <label>Phone Number</label>
+                    <div class="phone-input">
+                        <span class="country-code">+33</span>
+                        <input type="tel" id="phone-input" placeholder="6 12 34 56 78">
+                    </div>
+                </div>
+                <button class="btn-primary" id="btn-onboarding-next">
+                    Continue <i data-lucide="arrow-right"></i>
+                </button>
+                <p class="onboarding-note">By continuing, you agree to the decentralized protocol.</p>
+            </div>
+        </div>
+
+        <!-- Main Messenger View -->
+        <div id="messenger-view" class="view">
+            <!-- Sidebar (Desktop) / List View (Mobile) -->
+            <aside class="sidebar" id="sidebar">
+                <header class="sidebar-header">
+                    <div class="profile-thumb" id="my-profile-btn">
+                        <img id="my-avatar" src="https://api.dicebear.com/7.x/avataaars/svg?seed=Felix" alt="Me">
+                        <div class="status-dot"></div>
+                    </div>
+                    <h2 class="sidebar-title">Cipher</h2>
+                    <button class="icon-btn" id="new-chat-btn"><i data-lucide="edit-3"></i></button>
+                </header>
+                
+                <div class="search-bar">
+                    <i data-lucide="search"></i>
+                    <input type="text" id="contact-search" placeholder="Search @username or phone...">
+                </div>
+
+                <div class="chat-list" id="chat-list">
+                    <!-- Chat items injected here -->
+                </div>
+
+                <nav class="mobile-nav">
+                    <button class="nav-btn active"><i data-lucide="message-square"></i></button>
+                    <button class="nav-btn"><i data-lucide="users"></i></button>
+                    <button class="nav-btn"><i data-lucide="settings"></i></button>
+                </nav>
+            </aside>
+
+            <!-- Chat Main View -->
+            <main class="chat-view" id="chat-view">
+                <header class="chat-header">
+                    <button class="back-btn" id="back-to-list"><i data-lucide="chevron-left"></i></button>
+                    <div class="chat-contact-info">
+                        <div class="contact-avatar">
+                            <img id="active-avatar" src="" alt="">
+                        </div>
+                        <div class="contact-meta">
+                            <h3 id="active-name">Select a contact</h3>
+                            <span class="status-text" id="active-status">Encrypted Connection</span>
+                        </div>
+                    </div>
+                    <div class="chat-actions">
+                        <button class="icon-btn"><i data-lucide="phone"></i></button>
+                        <button class="icon-btn"><i data-lucide="video"></i></button>
+                    </div>
+                </header>
+
+                <div class="message-area" id="message-area">
+                    <div class="empty-state">
+                        <i data-lucide="lock"></i>
+                        <p>Messages are end-to-end encrypted. No one outside of this chat can read them.</p>
+                    </div>
+                </div>
+
+                <footer class="message-input-area">
+                    <input type="file" id="photo-input" accept="image/*" style="display: none;">
+                    <button class="icon-btn" id="btn-attach"><i data-lucide="paperclip"></i></button>
+                    <div class="input-wrapper">
+                        <textarea id="message-input" placeholder="Message..." rows="1"></textarea>
+                        <button class="icon-btn"><i data-lucide="smile"></i></button>
+                    </div>
+                    <button class="send-btn" id="btn-send"><i data-lucide="send"></i></button>
+                </footer>
+            </main>
+        </div>
+    </div>
+
+    <!-- Modals -->
+    <div id="profile-modal" class="modal">
+        <div class="modal-content settings-modal glass-card">
+            <header class="settings-header">
+                <button class="icon-btn" id="profile-close"><i data-lucide="x"></i></button>
+                <h3>Settings</h3>
+                <button class="text-btn" id="profile-save">Done</button>
+            </header>
+            
+            <div class="settings-profile-card">
+                <div class="profile-avatar-wrapper">
+                    <img id="profile-preview" src="https://api.dicebear.com/7.x/avataaars/svg?seed=Felix" class="large-avatar">
+                    <button class="btn-edit-avatar" id="btn-change-avatar">
+                        <i data-lucide="camera"></i>
+                    </button>
+                    <input type="file" id="avatar-input" accept="image/*" style="display: none;">
+                </div>
+                <div class="profile-info">
+                    <input type="text" id="display-name-input" placeholder="Display Name" value="Felix">
+                    <span id="profile-phone">+33 6 12 34 56 78</span>
+                    <input type="text" id="username-input" placeholder="@username" value="@felix">
+                </div>
+            </div>
+
+            <div class="settings-list">
+                <div class="settings-item">
+                    <i data-lucide="bell" class="icon-orange"></i>
+                    <span>Notifications and Sounds</span>
+                    <i data-lucide="chevron-right" class="arrow"></i>
+                </div>
+                <div class="settings-item">
+                    <i data-lucide="lock" class="icon-blue"></i>
+                    <span>Privacy and Security</span>
+                    <i data-lucide="chevron-right" class="arrow"></i>
+                </div>
+                <div class="settings-item">
+                    <i data-lucide="database" class="icon-green"></i>
+                    <span>Data and Storage</span>
+                    <i data-lucide="chevron-right" class="arrow"></i>
+                </div>
+                <div class="settings-item">
+                    <i data-lucide="languages" class="icon-purple"></i>
+                    <span>Language</span>
+                    <span class="value">English</span>
+                </div>
+            </div>
+
+            <button class="btn-logout" id="btn-logout">Log Out</button>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+    <script>
+        // Register Service Worker
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('sw.js').catch(err => console.log('SW registration failed:', err));
+            });
+        }
+        // Initialize Lucide
+        lucide.createIcons();
+    </script>
+</body>
+</html>

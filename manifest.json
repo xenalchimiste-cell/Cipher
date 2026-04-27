@@ -1,0 +1,20 @@
+{
+  "name": "Cipher Secure Messenger",
+  "short_name": "Cipher",
+  "start_url": "index.html",
+  "display": "standalone",
+  "background_color": "#050505",
+  "theme_color": "#050505",
+  "icons": [
+    {
+      "src": "https://via.placeholder.com/192/050505/00F3FF?text=C",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "https://via.placeholder.com/512/050505/00F3FF?text=Cipher",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
