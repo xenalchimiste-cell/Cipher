@@ -121,12 +121,15 @@
                         </div>
                         <div class="contact-meta">
                             <h3 id="active-name">Select a contact</h3>
-                            <span class="status-text" id="active-status">Encrypted Connection</span>
+                            <div class="status-container">
+                                <span class="status-text" id="active-status">Encrypted Connection</span>
+                                <span class="typing-indicator" id="typing-indicator">typing...</span>
+                            </div>
                         </div>
                     </div>
                     <div class="chat-actions">
-                        <button class="icon-btn"><i data-lucide="phone"></i></button>
-                        <button class="icon-btn"><i data-lucide="video"></i></button>
+                        <button class="icon-btn" id="btn-audio-call"><i data-lucide="phone"></i></button>
+                        <button class="icon-btn" id="btn-video-call"><i data-lucide="video"></i></button>
                     </div>
                 </header>
 
@@ -176,15 +179,21 @@
             </div>
 
             <div class="settings-list">
-                <div class="settings-item">
+                <div class="settings-item" id="setting-notifications">
                     <i data-lucide="bell" class="icon-orange"></i>
-                    <span>Notifications and Sounds</span>
-                    <i data-lucide="chevron-right" class="arrow"></i>
+                    <span>Notifications</span>
+                    <label class="switch">
+                        <input type="checkbox">
+                        <span class="slider round"></span>
+                    </label>
                 </div>
-                <div class="settings-item">
-                    <i data-lucide="lock" class="icon-blue"></i>
-                    <span>Privacy and Security</span>
-                    <i data-lucide="chevron-right" class="arrow"></i>
+                <div class="settings-item" id="setting-incognito">
+                    <i data-lucide="eye-off" class="icon-purple"></i>
+                    <span>Incognito Mode</span>
+                    <label class="switch">
+                        <input type="checkbox">
+                        <span class="slider round"></span>
+                    </label>
                 </div>
                 <div class="settings-item">
                     <i data-lucide="database" class="icon-green"></i>
@@ -192,7 +201,7 @@
                     <i data-lucide="chevron-right" class="arrow"></i>
                 </div>
                 <div class="settings-item">
-                    <i data-lucide="languages" class="icon-purple"></i>
+                    <i data-lucide="languages" class="icon-blue"></i>
                     <span>Language</span>
                     <span class="value">English</span>
                 </div>
@@ -204,12 +213,30 @@
     </div>
 
     <script src="app.js"></script>
-    <script>
+    <!-- Call Interface -->
+    <div id="call-view" class="modal call-modal">
+        <div class="call-content">
+            <div class="call-avatar-pulse">
+                <img src="" id="call-avatar" alt="">
+            </div>
+            <h2 id="call-name">Kaelen Drass</h2>
+            <p id="call-status">SECURE LINE ESTABLISHED...</p>
+            
+            <div class="call-actions">
+                <button class="call-btn end" id="btn-end-call">
+                    <i data-lucide="phone-off"></i>
+                </button>
+                <button class="call-btn accept" id="btn-accept-call">
+                    <i data-lucide="phone"></i>
+                </button>
+            </div>
+        </div>
+    </div>
         // Register Service Worker with Auto-Update & Cache Busting
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
                 // Added query string to force browser to check for new SW
-                navigator.serviceWorker.register('sw.js?v=15').then(reg => {
+                navigator.serviceWorker.register('sw.js?v=16').then(reg => {
                     reg.addEventListener('updatefound', () => {
                         const newWorker = reg.installing;
                         newWorker.addEventListener('statechange', () => {

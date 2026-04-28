@@ -1,4 +1,4 @@
-const CACHE_NAME = 'cipher-v15';
+const CACHE_NAME = 'cipher-v16';
 const ASSETS = [
   './',
   './index.html',

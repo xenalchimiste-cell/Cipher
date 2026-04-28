@@ -129,11 +129,13 @@ function initEventListeners() {
         });
     });
 
-    // Chat Actions (Placeholders)
-    document.querySelectorAll('.chat-actions .icon-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-            alert("Encrypted Video/Audio call feature will be available in the next node update.");
-        });
+    // Chat Actions (Real Calls)
+    document.getElementById('btn-audio-call').addEventListener('click', () => startCall('AUDIO'));
+    document.getElementById('btn-video-call').addEventListener('click', () => startCall('VIDEO'));
+    document.getElementById('btn-end-call').addEventListener('click', endCall);
+    document.getElementById('btn-accept-call').addEventListener('click', () => {
+        document.getElementById('call-status').textContent = 'SECURE CHANNEL CONNECTED';
+        document.getElementById('btn-accept-call').style.display = 'none';
     });
 
     // Visual Viewport (Keyboard detection)
@@ -179,6 +181,12 @@ function initEventListeners() {
             const settingName = e.target.closest('.settings-item').id || 'unknown';
             if (!currentUser.settings) currentUser.settings = {};
             currentUser.settings[settingName] = e.target.checked;
+            
+            // Real-time effect for Incognito
+            if (settingName === 'setting-incognito') {
+                updateProfileUI();
+            }
+            
             saveData();
         });
     });
@@ -259,6 +267,16 @@ function renderChatList(filter = '') {
         c.username.toLowerCase().includes(filter.toLowerCase()) ||
         c.phone.includes(filter)
     );
+
+    if (filtered.length === 0 && filter.length > 2) {
+        chatList.innerHTML = `
+            <div class="empty-chat-list">
+                <p>No node found for "${filter}"</p>
+                <button class="text-btn" onclick="addContact('${filter}')">+ Add as new node</button>
+            </div>
+        `;
+        return;
+    }
 
     filtered.forEach(contact => {
         const item = document.createElement('div');
@@ -392,6 +410,8 @@ function sendMessage() {
 function simulateReply() {
     if (!activeChat) return;
     
+    setTyping(true);
+    
     const replies = [
         "Transmission received. Encrypting response...",
         "Acknowledged. Node is stable.",
@@ -400,19 +420,48 @@ function simulateReply() {
     ];
     const replyText = replies[Math.floor(Math.random() * replies.length)];
     
-    const reply = {
-        sender: 'other',
-        text: replyText,
-        time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
-    };
-    
-    messages[activeChat.id].push(reply);
-    activeChat.lastMsg = reply.text;
-    activeChat.time = 'Now';
-    
-    saveData();
-    renderMessages();
-    renderChatList();
+    setTimeout(() => {
+        const reply = {
+            sender: 'other',
+            text: replyText,
+            time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+        };
+        
+        messages[activeChat.id].push(reply);
+        activeChat.lastMsg = reply.text;
+        activeChat.time = 'Now';
+        
+        saveData();
+        renderMessages();
+        renderChatList();
+        setTyping(false);
+    }, 2000);
+}
+
+function startCall(type) {
+    if (!activeChat) return;
+    const callModal = document.getElementById('call-view');
+    document.getElementById('call-name').textContent = activeChat.name;
+    document.getElementById('call-avatar').src = activeChat.avatar;
+    document.getElementById('call-status').textContent = `ESTABLISHING SECURE ${type} LINK...`;
+    document.getElementById('btn-accept-call').style.display = 'flex';
+    callModal.classList.add('active');
+}
+
+function endCall() {
+    document.getElementById('call-view').classList.remove('active');
+}
+
+function setTyping(isTyping) {
+    const indicator = document.getElementById('typing-indicator');
+    const statusText = document.getElementById('active-status');
+    if (isTyping) {
+        indicator.style.display = 'block';
+        statusText.style.display = 'none';
+    } else {
+        indicator.style.display = 'none';
+        statusText.style.display = 'block';
+    }
 }
 
 function handlePhotoUpload(e) {
@@ -498,6 +547,13 @@ function updateProfileUI() {
     usernameInput.value = currentUser.username || '@user';
     profilePhone.textContent = currentUser.phone || 'Unknown';
     
+    // Incognito effect
+    const isIncognito = currentUser.settings && currentUser.settings['setting-incognito'];
+    const statusDot = document.querySelector('.status-dot');
+    if (statusDot) {
+        statusDot.style.display = isIncognito ? 'none' : 'block';
+    }
+
     // Update Toggles
     if (currentUser.settings) {
         Object.keys(currentUser.settings).forEach(id => {
@@ -517,6 +573,23 @@ function logout() {
 
 function saveData() {
     localStorage.setItem('cipher-messages', JSON.stringify(messages));
+}
+
+function addContact(val) {
+    const newContact = {
+        id: Date.now(),
+        name: val.startsWith('@') ? val.substring(1) : 'New Node',
+        username: val.startsWith('@') ? val : '@' + val,
+        phone: val.includes('0') ? val : 'Unknown',
+        avatar: `https://api.dicebear.com/7.x/avataaars/svg?seed=${val}`,
+        status: 'Online',
+        lastMsg: 'Connection established.',
+        time: 'Now'
+    };
+    contacts.push(newContact);
+    contactSearch.value = '';
+    renderChatList();
+    selectChat(newContact);
 }
 
 init();
