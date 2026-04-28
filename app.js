@@ -144,19 +144,28 @@ function initEventListeners() {
             const keyboardHeight = windowHeight - viewportHeight;
             
             if (keyboardHeight > 50) {
-                // Keyboard is likely open
+                // Keyboard is open
+                document.body.style.height = `${viewportHeight}px`;
                 messengerView.style.height = `${viewportHeight}px`;
                 document.querySelector('.mobile-nav').style.display = 'none';
                 scrollToBottom();
             } else {
                 // Keyboard is closed
+                document.body.style.height = '100%';
                 messengerView.style.height = '100%';
-                if (window.innerWidth <= 768) {
+                if (window.innerWidth <= 768 && !document.body.classList.contains('nav-hidden')) {
                     document.querySelector('.mobile-nav').style.display = 'flex';
                 }
             }
         });
     }
+
+    // Prevent body scrolling (rubber-band)
+    document.body.addEventListener('touchmove', (e) => {
+        if (!e.target.closest('.message-area') && !e.target.closest('.chat-list') && !e.target.closest('.settings-list')) {
+            e.preventDefault();
+        }
+    }, { passive: false });
 
     messageInput.addEventListener('focus', () => {
         setTimeout(scrollToBottom, 300);
