@@ -952,3 +952,24 @@ input:checked + .slider:before {
         border-radius: 0;
     }
 }
+
+/* Standalone PWA Optimizations */
+@media (display-mode: standalone) {
+    body {
+        position: fixed;
+        height: 100vh;
+        width: 100vw;
+    }
+    
+    .app-container {
+        height: 100vh;
+    }
+    
+    .mobile-nav {
+        padding-bottom: calc(15px + env(safe-area-inset-bottom, 0px));
+    }
+    
+    .message-input-area {
+        padding-bottom: calc(15px + env(safe-area-inset-bottom, 0px));
+    }
+}

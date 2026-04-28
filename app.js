@@ -143,6 +143,8 @@ function initEventListeners() {
             const windowHeight = window.innerHeight;
             const keyboardHeight = windowHeight - viewportHeight;
             
+            const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
+            
             if (keyboardHeight > 50) {
                 // Keyboard is open
                 document.body.style.height = `${viewportHeight}px`;
@@ -151,8 +153,8 @@ function initEventListeners() {
                 scrollToBottom();
             } else {
                 // Keyboard is closed
-                document.body.style.height = '100%';
-                messengerView.style.height = '100%';
+                document.body.style.height = isStandalone ? '100vh' : '100%';
+                messengerView.style.height = isStandalone ? '100vh' : '100%';
                 if (window.innerWidth <= 768 && !document.body.classList.contains('nav-hidden')) {
                     document.querySelector('.mobile-nav').style.display = 'flex';
                 }
