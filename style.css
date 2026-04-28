@@ -960,10 +960,10 @@ input:checked + .slider:before {
     }
     
     .mobile-nav {
-        padding-bottom: env(safe-area-inset-bottom, 10px);
+        padding-bottom: 5px;
     }
     
     .message-input-area {
-        padding-bottom: env(safe-area-inset-bottom, 10px);
+        padding-bottom: 5px;
     }
 }
