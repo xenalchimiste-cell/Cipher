@@ -199,15 +199,17 @@
             </div>
 
             <button class="btn-logout" id="btn-logout">Log Out</button>
+            <button class="btn-update" id="btn-force-update">Clear Cache & Update</button>
         </div>
     </div>
 
     <script src="app.js"></script>
     <script>
-        // Register Service Worker with Auto-Update
+        // Register Service Worker with Auto-Update & Cache Busting
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
-                navigator.serviceWorker.register('sw.js').then(reg => {
+                // Added query string to force browser to check for new SW
+                navigator.serviceWorker.register('sw.js?v=10').then(reg => {
                     reg.addEventListener('updatefound', () => {
                         const newWorker = reg.installing;
                         newWorker.addEventListener('statechange', () => {

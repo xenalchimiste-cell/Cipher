@@ -95,6 +95,29 @@ function initEventListeners() {
 
     profileClose.addEventListener('click', () => profileModal.classList.remove('active'));
     btnLogout.addEventListener('click', logout);
+    
+    // Force Update Logic
+    const btnForceUpdate = document.getElementById('btn-force-update');
+    if (btnForceUpdate) {
+        btnForceUpdate.addEventListener('click', () => {
+            if (confirm("This will clear all cache and reload the app. Continue?")) {
+                if ('serviceWorker' in navigator) {
+                    navigator.serviceWorker.getRegistrations().then(registrations => {
+                        for (let registration of registrations) {
+                            registration.unregister();
+                        }
+                        caches.keys().then(names => {
+                            for (let name of names) caches.delete(name);
+                            window.location.reload(true);
+                        });
+                    });
+                } else {
+                    window.location.reload(true);
+                }
+            }
+        });
+    }
+
     profileSave.addEventListener('click', saveProfile);
     
     // Mobile Nav
