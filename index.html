@@ -209,7 +209,7 @@
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
                 // Added query string to force browser to check for new SW
-                navigator.serviceWorker.register('sw.js?v=12').then(reg => {
+                navigator.serviceWorker.register('sw.js?v=13').then(reg => {
                     reg.addEventListener('updatefound', () => {
                         const newWorker = reg.installing;
                         newWorker.addEventListener('statechange', () => {

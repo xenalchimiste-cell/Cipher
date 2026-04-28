@@ -45,8 +45,7 @@ h1, h2, h3, .sidebar-title {
 
 .app-container {
     width: 100%;
-    height: 100vh;
-    height: 100svh;
+    height: 100%;
     display: flex;
     position: relative;
     overflow: hidden;
@@ -606,8 +605,8 @@ h1, h2, h3, .sidebar-title {
     bottom: 0;
     left: 0;
     width: 100%;
-    padding: 12px 24px;
-    padding-bottom: calc(12px + env(safe-area-inset-bottom, 0px));
+    padding: 10px 24px;
+    padding-bottom: env(safe-area-inset-bottom, 10px);
     border-top: 1px solid var(--glass-border);
     justify-content: space-around;
     background: #0A0A0A;
@@ -955,21 +954,16 @@ input:checked + .slider:before {
 
 /* Standalone PWA Optimizations */
 @media (display-mode: standalone) {
-    body {
-        position: fixed;
-        height: 100vh;
-        width: 100vw;
-    }
-    
-    .app-container {
-        height: 100vh;
+    body, html, .app-container, .view {
+        height: 100% !important;
+        height: -webkit-fill-available !important;
     }
     
     .mobile-nav {
-        padding-bottom: calc(15px + env(safe-area-inset-bottom, 0px));
+        padding-bottom: env(safe-area-inset-bottom, 10px);
     }
     
     .message-input-area {
-        padding-bottom: calc(15px + env(safe-area-inset-bottom, 0px));
+        padding-bottom: env(safe-area-inset-bottom, 10px);
     }
 }
